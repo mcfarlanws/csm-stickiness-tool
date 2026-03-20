@@ -26,7 +26,6 @@
     --coral-text: #4A1B0C;
     --radius: 12px;
     --radius-sm: 8px;
-    --shadow: 0 1px 3px rgba(0,0,0,0.06);
   }
 
   @media (prefers-color-scheme: dark) {
@@ -60,9 +59,152 @@
     overflow: hidden;
   }
 
+  /* PASSWORD SCREEN */
+  #password-screen {
+    position: fixed; inset: 0;
+    background: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 200;
+  }
+
+  .pw-card {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-mid);
+    border-radius: var(--radius);
+    padding: 36px 32px;
+    width: 100%;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    text-align: center;
+  }
+
+  .pw-card canvas {
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    width: 96px;
+    height: 144px;
+    display: block;
+  }
+
+  .pw-card h2 { font-size: 16px; font-weight: 500; color: var(--text); }
+
+  .pw-card input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-mid);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-family: inherit;
+    background: var(--bg);
+    color: var(--text);
+    outline: none;
+    text-align: center;
+    letter-spacing: 0.08em;
+  }
+  .pw-card input:focus { border-color: var(--accent); }
+
+  .pw-error { font-size: 12px; color: #993C1D; display: none; }
+
+  .pw-btn {
+    width: 100%;
+    padding: 11px;
+    border-radius: var(--radius-sm);
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+    font-weight: 500;
+    transition: opacity 0.15s;
+  }
+  .pw-btn:hover { opacity: 0.88; }
+
+  /* API KEY SCREEN */
+  #key-screen {
+    position: fixed; inset: 0;
+    background: var(--bg);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+  }
+
+  .key-card {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-mid);
+    border-radius: var(--radius);
+    padding: 36px 32px;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .key-card .brand { display: flex; align-items: center; gap: 10px; }
+  .key-card .brand .logo {
+    width: 32px; height: 32px;
+    background: var(--accent-light);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .key-card .brand .logo svg { width: 18px; height: 18px; display: block; }
+
+  .key-card h2 { font-size: 18px; font-weight: 500; color: var(--text); }
+  .key-card p  { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-top: -10px; }
+  .key-card label { font-size: 13px; color: var(--text-muted); display: block; margin-bottom: 6px; }
+
+  .key-input-wrap { position: relative; }
+  .key-input-wrap input {
+    width: 100%;
+    padding: 10px 40px 10px 12px;
+    border: 1px solid var(--border-mid);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-family: monospace;
+    background: var(--bg);
+    color: var(--text);
+    outline: none;
+    letter-spacing: 0.04em;
+  }
+  .key-input-wrap input:focus { border-color: var(--accent); }
+
+  .toggle-vis {
+    position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+    background: none; border: none; cursor: pointer; padding: 2px;
+    color: var(--text-muted);
+    display: flex; align-items: center;
+  }
+
+  .key-error { font-size: 13px; color: #993C1D; display: none; }
+
+  .start-btn {
+    padding: 11px;
+    border-radius: var(--radius-sm);
+    border: none;
+    background: var(--accent);
+    color: #fff;
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+    font-weight: 500;
+    transition: opacity 0.15s;
+  }
+  .start-btn:hover { opacity: 0.88; }
+  .start-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .key-hint { font-size: 12px; color: var(--text-muted); text-align: center; }
+  .key-hint a { color: var(--accent); text-decoration: none; }
+
+  /* MAIN APP */
   header {
     padding: 14px 24px;
-    border-bottom: 0.5px solid var(--border);
+    border-bottom: 1px solid var(--border);
     background: var(--bg-panel);
     display: flex;
     align-items: center;
@@ -75,75 +217,47 @@
     background: var(--accent-light);
     border-radius: 6px;
     display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
   }
-
-  header .logo svg { width: 16px; height: 16px; }
-
+  header .logo svg { width: 16px; height: 16px; display: block; }
   header h1 { font-size: 15px; font-weight: 500; color: var(--text); }
   header p  { font-size: 13px; color: var(--text-muted); margin-top: 1px; }
 
-  .workspace {
-    display: flex;
-    flex: 1;
-    overflow: hidden;
-  }
+  .workspace { display: flex; flex: 1; overflow: hidden; }
 
   .chat-panel {
-    width: 420px;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    border-right: 0.5px solid var(--border);
+    width: 420px; flex-shrink: 0;
+    display: flex; flex-direction: column;
+    border-right: 1px solid var(--border);
     background: var(--bg-panel);
   }
 
   .messages {
-    flex: 1;
-    overflow-y: auto;
+    flex: 1; overflow-y: auto;
     padding: 20px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+    display: flex; flex-direction: column; gap: 12px;
   }
 
-  .msg {
-    display: flex;
-    gap: 10px;
-    max-width: 100%;
-  }
-
+  .msg { display: flex; gap: 10px; max-width: 100%; }
   .msg.user { flex-direction: row-reverse; }
 
   .msg .avatar {
     width: 28px; height: 28px; border-radius: 50%;
     flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 500;
-    margin-top: 2px;
+    font-size: 11px; font-weight: 500; margin-top: 2px;
   }
-
   .msg.assistant .avatar { background: var(--accent-light); color: var(--accent-text); }
   .msg.user .avatar { background: var(--bg-surface); color: var(--text-muted); }
 
   .bubble {
     padding: 10px 14px;
     border-radius: 14px;
-    font-size: 14px;
-    line-height: 1.55;
+    font-size: 14px; line-height: 1.55;
     max-width: 320px;
   }
-
-  .msg.assistant .bubble {
-    background: var(--bg-surface);
-    color: var(--text);
-    border-radius: 4px 14px 14px 14px;
-  }
-
-  .msg.user .bubble {
-    background: var(--accent-light);
-    color: var(--accent-text);
-    border-radius: 14px 4px 14px 14px;
-  }
+  .msg.assistant .bubble { background: var(--bg-surface); color: var(--text); border-radius: 4px 14px 14px 14px; }
+  .msg.user .bubble { background: var(--accent-light); color: var(--accent-text); border-radius: 14px 4px 14px 14px; }
 
   .typing { display: flex; gap: 4px; padding: 4px 0; }
   .typing span {
@@ -157,132 +271,68 @@
 
   .input-area {
     padding: 12px 16px;
-    border-top: 0.5px solid var(--border);
-    display: flex;
-    gap: 8px;
-    align-items: flex-end;
+    border-top: 1px solid var(--border);
+    display: flex; gap: 8px; align-items: flex-end;
   }
 
   .input-area textarea {
-    flex: 1;
-    resize: none;
-    border: 0.5px solid var(--border-mid);
+    flex: 1; resize: none;
+    border: 1px solid var(--border-mid);
     border-radius: var(--radius-sm);
     padding: 10px 12px;
-    font-size: 14px;
-    font-family: inherit;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.5;
-    min-height: 42px;
-    max-height: 120px;
-    outline: none;
+    font-size: 14px; font-family: inherit;
+    background: var(--bg); color: var(--text);
+    line-height: 1.5; min-height: 42px; max-height: 120px; outline: none;
   }
-
   .input-area textarea:focus { border-color: var(--accent); }
   .input-area textarea::placeholder { color: var(--text-muted); }
 
   .send-btn {
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    border: none;
-    background: var(--accent);
-    color: #fff;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    transition: opacity 0.15s;
+    width: 36px; height: 36px; border-radius: 50%;
+    border: none; background: var(--accent); color: #fff;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: opacity 0.15s;
   }
   .send-btn:hover { opacity: 0.85; }
   .send-btn:disabled { opacity: 0.35; cursor: not-allowed; }
 
   .infographic-panel {
-    flex: 1;
-    overflow-y: auto;
+    flex: 1; overflow-y: auto;
     padding: 32px 28px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+    display: flex; flex-direction: column; gap: 24px;
   }
 
-  .infographic-header {
-    text-align: center;
-  }
-
+  .infographic-header { text-align: center; }
   .infographic-header .tag {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 8px;
+    display: inline-block; font-size: 11px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--text-muted); margin-bottom: 8px;
   }
-
-  .infographic-header .customer-name {
-    font-size: 22px;
-    font-weight: 500;
-    color: var(--text);
-  }
-
-  .infographic-header .subtitle {
-    font-size: 14px;
-    color: var(--text-muted);
-    margin-top: 4px;
-  }
+  .infographic-header .customer-name { font-size: 22px; font-weight: 500; color: var(--text); }
+  .infographic-header .subtitle { font-size: 14px; color: var(--text-muted); margin-top: 4px; }
 
   .empty-state {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    opacity: 0.45;
-    text-align: center;
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 10px; opacity: 0.45; text-align: center;
   }
-
   .empty-state svg { width: 40px; height: 40px; }
   .empty-state p { font-size: 14px; color: var(--text-muted); line-height: 1.5; max-width: 240px; }
 
-  .pillars-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
-  }
+  .pillars-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 
   .pillar-card {
-    border: 0.5px solid var(--border);
+    border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 20px 16px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    display: flex; flex-direction: column; gap: 10px;
     background: var(--bg-panel);
-    transition: opacity 0.3s;
     min-height: 200px;
   }
+  .pillar-card.empty { border-style: dashed; opacity: 0.4; justify-content: center; align-items: center; }
+  .pillar-card.empty .placeholder-num { font-size: 28px; font-weight: 500; color: var(--text-muted); opacity: 0.4; }
 
-  .pillar-card.empty {
-    border-style: dashed;
-    opacity: 0.4;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .pillar-card.empty .placeholder-num {
-    font-size: 28px;
-    font-weight: 500;
-    color: var(--text-muted);
-    opacity: 0.4;
-  }
-
-  .pillar-icon {
-    width: 36px; height: 36px;
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-  }
-
+  .pillar-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
   .pillar-icon svg { width: 18px; height: 18px; }
 
   .pillar-card.p1 .pillar-icon { background: var(--accent-light); }
@@ -301,228 +351,42 @@
   .pillar-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; flex: 1; }
 
   .evidence-list { display: flex; flex-direction: column; gap: 5px; margin-top: 4px; }
-  .evidence-item {
-    font-size: 12px;
-    color: var(--text-muted);
-    padding-left: 12px;
-    position: relative;
-    line-height: 1.45;
-  }
-  .evidence-item::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 7px;
-    width: 4px; height: 4px;
-    border-radius: 50%;
-    background: var(--text-muted);
-    opacity: 0.5;
-  }
-
+  .evidence-item { font-size: 12px; color: var(--text-muted); padding-left: 12px; position: relative; line-height: 1.45; }
+  .evidence-item::before { content: ''; position: absolute; left: 0; top: 7px; width: 4px; height: 4px; border-radius: 50%; background: var(--text-muted); opacity: 0.5; }
   .pillar-card.p1 .evidence-item::before { background: var(--accent); opacity: 0.6; }
   .pillar-card.p2 .evidence-item::before { background: var(--teal); opacity: 0.6; }
   .pillar-card.p3 .evidence-item::before { background: var(--coral); opacity: 0.6; }
 
-  .divider { height: 0.5px; background: var(--border); }
+  .divider { height: 1px; background: var(--border); }
 
-  .summary-card {
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    background: var(--bg-panel);
-  }
-
+  .summary-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; background: var(--bg-panel); }
   .summary-card h3 { font-size: 13px; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 10px; }
   .summary-card p { font-size: 14px; color: var(--text); line-height: 1.65; }
 
   .export-btn {
     display: flex; align-items: center; justify-content: center; gap: 8px;
     padding: 10px 20px;
-    border: 0.5px solid var(--border-mid);
+    border: 1px solid var(--border-mid);
     border-radius: var(--radius-sm);
-    background: transparent;
-    color: var(--text);
-    font-size: 14px;
-    font-family: inherit;
-    cursor: pointer;
-    align-self: flex-end;
-    transition: background 0.15s;
+    background: transparent; color: var(--text);
+    font-size: 14px; font-family: inherit; cursor: pointer;
+    align-self: flex-end; transition: background 0.15s;
   }
   .export-btn:hover { background: var(--bg-surface); }
 
-  .progress-bar {
-    height: 3px;
-    background: var(--bg-surface);
-    border-radius: 2px;
-    overflow: hidden;
-    margin-top: 4px;
-  }
-  .progress-fill {
-    height: 100%;
-    background: var(--accent);
-    border-radius: 2px;
-    transition: width 0.4s ease;
-  }
-
-  .step-indicator {
-    display: flex; gap: 6px; justify-content: center;
-  }
-  .step-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--border-mid);
-    transition: background 0.3s;
-  }
-  .step-dot.active { background: var(--accent); }
-
-  #password-screen {
-    position: absolute; inset: 0;
-    background: var(--bg);
-    display: flex; align-items: center; justify-content: center;
-    z-index: 200;
-  }
-
-  .pw-card {
-    background: var(--bg-panel);
-    border: 0.5px solid var(--border-mid);
-    border-radius: var(--radius);
-    padding: 36px 32px;
-    width: 100%;
-    max-width: 360px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 18px;
-    text-align: center;
-  }
-
-  .pw-card canvas {
-    image-rendering: pixelated;
-    width: 96px; height: 144px;
-  }
-
-  .pw-card h2 { font-size: 16px; font-weight: 500; color: var(--text); }
-
-  .pw-card input {
-    width: 100%;
-    padding: 10px 12px;
-    border: 0.5px solid var(--border-mid);
-    border-radius: var(--radius-sm);
-    font-size: 14px;
-    background: var(--bg);
-    color: var(--text);
-    outline: none;
-    text-align: center;
-    letter-spacing: 0.08em;
-  }
-  .pw-card input:focus { border-color: var(--accent); }
-
-  .pw-error { font-size: 12px; color: var(--coral); display: none; }
-
-  .pw-btn {
-    width: 100%;
-    padding: 11px;
-    border-radius: var(--radius-sm);
-    border: none;
-    background: var(--accent);
-    color: #fff;
-    font-size: 14px;
-    font-family: inherit;
-    cursor: pointer;
-    font-weight: 500;
-    transition: opacity 0.15s;
-  }
-  .pw-btn:hover { opacity: 0.88; }
-
-  #key-screen {
-    position: absolute; inset: 0;
-    background: var(--bg);
-    display: flex; align-items: center; justify-content: center;
-    z-index: 100;
-  }
-
-  .key-card {
-    background: var(--bg-panel);
-    border: 0.5px solid var(--border-mid);
-    border-radius: var(--radius);
-    padding: 36px 32px;
-    width: 100%;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .key-card .brand {
-    display: flex; align-items: center; gap: 10px;
-  }
-
-  .key-card .brand .logo {
-    width: 32px; height: 32px;
-    background: var(--accent-light);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-  }
-
-  .key-card h2 { font-size: 18px; font-weight: 500; color: var(--text); }
-  .key-card p  { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-top: -10px; }
-
-  .key-card label { font-size: 13px; color: var(--text-muted); display: block; margin-bottom: 6px; }
-
-  .key-input-wrap { position: relative; }
-  .key-input-wrap input {
-    width: 100%;
-    padding: 10px 40px 10px 12px;
-    border: 0.5px solid var(--border-mid);
-    border-radius: var(--radius-sm);
-    font-size: 14px;
-    font-family: monospace;
-    background: var(--bg);
-    color: var(--text);
-    outline: none;
-    letter-spacing: 0.04em;
-  }
-  .key-input-wrap input:focus { border-color: var(--accent); }
-
-  .toggle-vis {
-    position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
-    background: none; border: none; cursor: pointer; padding: 2px;
-    color: var(--text-muted);
-    display: flex; align-items: center;
-  }
-
-  .key-error { font-size: 13px; color: var(--coral); display: none; }
-
-  .start-btn {
-    padding: 11px;
-    border-radius: var(--radius-sm);
-    border: none;
-    background: var(--accent);
-    color: #fff;
-    font-size: 14px;
-    font-family: inherit;
-    cursor: pointer;
-    font-weight: 500;
-    transition: opacity 0.15s;
-  }
-  .start-btn:hover { opacity: 0.88; }
-  .start-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-  .key-hint {
-    font-size: 12px;
-    color: var(--text-muted);
-    text-align: center;
-  }
-  .key-hint a { color: var(--accent); text-decoration: none; }
+  .progress-bar { height: 3px; background: var(--bg-surface); border-radius: 2px; overflow: hidden; margin-top: 4px; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
 
   @media (max-width: 760px) {
     .workspace { flex-direction: column; }
-    .chat-panel { width: 100%; height: 55vh; border-right: none; border-bottom: 0.5px solid var(--border); }
+    .chat-panel { width: 100%; height: 55vh; border-right: none; border-bottom: 1px solid var(--border); }
     .pillars-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 
+<!-- PASSWORD SCREEN -->
 <div id="password-screen">
   <div class="pw-card">
     <canvas id="wizardCanvas" width="16" height="24"></canvas>
@@ -533,10 +397,12 @@
   </div>
 </div>
 
-<div id="key-screen" style="display:none;">  <div class="key-card">
+<!-- API KEY SCREEN -->
+<div id="key-screen">
+  <div class="key-card">
     <div class="brand">
       <div class="logo">
-        <svg width="18" height="18" viewBox="0 0 16 16" fill="none">
+        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="1" y="11" width="4" height="4" rx="1" fill="#3C3489"/>
           <rect x="6" y="7" width="4" height="8" rx="1" fill="#0F6E56"/>
           <rect x="11" y="3" width="4" height="12" rx="1" fill="#993C1D"/>
@@ -551,7 +417,7 @@
       <div class="key-input-wrap">
         <input type="password" id="apiKeyInput" placeholder="sk-ant-..." autocomplete="off" spellcheck="false"/>
         <button class="toggle-vis" id="toggleVis" tabindex="-1">
-          <svg id="eyeIcon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M1 8s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5z" stroke="currentColor" stroke-width="1.2"/>
             <circle cx="8" cy="8" r="2" stroke="currentColor" stroke-width="1.2"/>
           </svg>
@@ -564,7 +430,8 @@
   </div>
 </div>
 
-
+<!-- MAIN APP -->
+<header>
   <div class="logo">
     <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect x="1" y="11" width="4" height="4" rx="1" fill="#3C3489"/>
@@ -579,7 +446,6 @@
 </header>
 
 <div class="workspace">
-
   <div class="chat-panel">
     <div class="messages" id="messages"></div>
     <div class="input-area">
@@ -591,7 +457,6 @@
       </button>
     </div>
   </div>
-
   <div class="infographic-panel" id="infographicPanel">
     <div class="empty-state" id="emptyState">
       <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -602,7 +467,6 @@
       <p>Your stickiness pillars will appear here as we discover them together.</p>
     </div>
   </div>
-
 </div>
 
 <script>
@@ -632,7 +496,7 @@ YOUR ROLE:
 RESPONSE FORMAT:
 Always respond in valid JSON with this structure:
 {
-  "message": "Your conversational reply to the CSM (markdown allowed, but keep it concise)",
+  "message": "Your conversational reply to the CSM",
   "pillars": [
     {
       "id": 1,
@@ -642,140 +506,24 @@ Always respond in valid JSON with this structure:
     }
   ],
   "customerName": "Company name if mentioned, else null",
-  "overallSummary": "2-3 sentence narrative summary of the customer relationship. Only include when all 3 pillars are identified, else null.",
+  "overallSummary": "2-3 sentence narrative summary. Only include when all 3 pillars are identified, else null.",
   "phase": "gathering|building|complete"
 }
 
 Only include pillars that are sufficiently identified. Start with an empty array. Add pillars as they emerge. Keep evidence points under 12 words each.
 
-Start by warmly welcoming the CSM and asking for the customer's name and what product they are selling.`;
+Start by warmly welcoming the CSM and asking for the customer name and product.`;
 
-const pwScreen = document.getElementById('password-screen');
-const pwInput  = document.getElementById('pwInput');
-const pwBtn    = document.getElementById('pwBtn');
-const pwError  = document.getElementById('pwError');
-
-(function drawWizard() {
-  const c = document.getElementById('wizardCanvas');
-  if (!c) return;
-  const ctx = c.getContext('2d');
-  const p = (x, y, color) => { ctx.fillStyle = color; ctx.fillRect(x, y, 1, 1); };
-
-  const DBR='#3d2410', BR='#6b4423', MBR='#8b5e35', LBR='#a67c52',
-        SK='#d4a574',  SKD='#b8865a',
-        WB='#f0ece0',  WBD='#c8c4b0',
-        ST='#5a3c1a',  GN='#2e7d4f',  LGN='#5dbb85';
-
-  // hat tip
-  p(7,0,DBR); p(8,0,DBR);
-  // hat upper
-  p(6,1,DBR); p(7,1,BR); p(8,1,BR); p(9,1,DBR);
-  // hat mid
-  p(5,2,DBR); p(6,2,BR); p(7,2,MBR); p(8,2,MBR); p(9,2,BR); p(10,2,DBR);
-  // hat lower
-  p(5,3,DBR); p(6,3,BR); p(7,3,BR); p(8,3,BR); p(9,3,BR); p(10,3,DBR);
-  // brim
-  for(let x=3;x<=12;x++) p(x,4,x===3||x===12?DBR:LBR);
-
-  // face
-  for(let x=5;x<=10;x++) p(x,5,SK);
-  p(5,6,SK); p(6,6,SKD); p(7,6,SK); p(8,6,SK); p(9,6,SKD); p(10,6,SK);
-  for(let x=5;x<=10;x++) p(x,7,SK);
-
-  // beard top
-  p(5,8,WB); p(6,8,WB); p(7,8,SK); p(8,8,SK); p(9,8,WB); p(10,8,WB);
-
-  // shoulders
-  p(3,9,DBR); p(4,9,BR); p(5,9,WB); p(6,9,WB); p(7,9,WB); p(8,9,WB); p(9,9,WB); p(10,9,WB); p(11,9,BR); p(12,9,DBR);
-
-  // upper robe + beard
-  p(3,10,DBR); p(4,10,MBR); p(5,10,BR); p(6,10,WB); p(7,10,WBD); p(8,10,WBD); p(9,10,WB); p(10,10,BR); p(11,10,MBR); p(12,10,DBR);
-  p(3,11,DBR); p(4,11,BR); p(5,11,MBR); p(6,11,WBD); p(7,11,WB); p(8,11,WB); p(9,11,WBD); p(10,11,MBR); p(11,11,BR); p(12,11,DBR);
-
-  // lower robe
-  p(2,12,DBR); p(3,12,BR); p(4,12,MBR); p(5,12,LBR); p(6,12,BR); p(7,12,BR); p(8,12,BR); p(9,12,LBR); p(10,12,MBR); p(11,12,BR); p(12,12,DBR);
-  p(2,13,DBR); p(3,13,MBR); p(4,13,LBR); p(5,13,MBR); p(6,13,BR); p(7,13,BR); p(8,13,BR); p(9,13,MBR); p(10,13,LBR); p(11,13,MBR); p(12,13,DBR);
-  p(1,14,DBR); p(2,14,BR); p(3,14,LBR); p(4,14,LBR); p(5,14,MBR); p(6,14,BR); p(7,14,BR); p(8,14,MBR); p(9,14,LBR); p(10,14,LBR); p(11,14,BR); p(12,14,DBR);
-
-  // hem
-  p(1,15,DBR); p(2,15,MBR); p(3,15,LBR); p(4,15,LBR); p(5,15,LBR); p(6,15,MBR); p(7,15,MBR); p(8,15,LBR); p(9,15,LBR); p(10,15,LBR); p(11,15,MBR); p(12,15,DBR);
-  p(1,16,DBR); p(2,16,DBR); p(3,16,BR); p(4,16,LBR); p(5,16,LBR); p(8,16,LBR); p(9,16,LBR); p(10,16,BR); p(11,16,DBR); p(12,16,DBR);
-
-  // feet
-  p(3,17,DBR); p(4,17,BR); p(5,17,MBR); p(8,17,MBR); p(9,17,BR); p(10,17,DBR);
-
-  // staff
-  p(0,2,LGN); p(1,2,GN);
-  p(0,3,GN);  p(1,3,LGN);
-  for(let y=4;y<=17;y++) p(0,y,ST);
-  p(0,8,MBR); p(0,12,MBR);
-})();
-
-function submitPassword() {
-  if (pwInput.value === 'effortless') {
-    pwScreen.style.display = 'none';
-    document.getElementById('key-screen').style.display = 'flex';
-  } else {
-    pwError.style.display = 'block';
-    pwInput.value = '';
-    pwInput.focus();
-  }
-}
-
-pwBtn.addEventListener('click', submitPassword);
-pwInput.addEventListener('keydown', e => { if (e.key === 'Enter') submitPassword(); });
-
-
-
-const keyScreen = document.getElementById('key-screen');
-const apiKeyInput = document.getElementById('apiKeyInput');
-const startBtn = document.getElementById('startBtn');
-const keyError = document.getElementById('keyError');
-const toggleVis = document.getElementById('toggleVis');
-
-apiKeyInput.addEventListener('input', () => {
-  const val = apiKeyInput.value.trim();
-  startBtn.disabled = !val.startsWith('sk-ant-');
-  keyError.style.display = 'none';
-});
-
-toggleVis.addEventListener('click', () => {
-  apiKeyInput.type = apiKeyInput.type === 'password' ? 'text' : 'password';
-});
-
-startBtn.addEventListener('click', async () => {
-  const key = apiKeyInput.value.trim();
-  startBtn.disabled = true;
-  startBtn.textContent = 'Verifying…';
-
-  try {
-    const test = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
-      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 10, messages: [{ role: 'user', content: 'hi' }] })
-    });
-    if (!test.ok && test.status === 401) throw new Error('invalid');
-    API_KEY = key;
-    keyScreen.style.display = 'none';
-    startConversation();
-  } catch {
-    keyError.style.display = 'block';
-    startBtn.disabled = false;
-    startBtn.textContent = 'Start session';
-  }
-});
-
-apiKeyInput.addEventListener('keydown', e => { if (e.key === 'Enter' && !startBtn.disabled) startBtn.click(); });
-
-
+let API_KEY = '';
+let conversationHistory = [];
 let pillarsData = [];
 let customerName = null;
 let isLoading = false;
 let appStarted = false;
 
-const messagesEl = document.getElementById('messages');
-const userInput = document.getElementById('userInput');
-const sendBtn = document.getElementById('sendBtn');
+const messagesEl  = document.getElementById('messages');
+const userInput   = document.getElementById('userInput');
+const sendBtn     = document.getElementById('sendBtn');
 const infographicPanel = document.getElementById('infographicPanel');
 
 const PILLAR_ICONS = [
@@ -783,238 +531,239 @@ const PILLAR_ICONS = [
   `<svg viewBox="0 0 18 18" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9a6 6 0 0112 0"/><path d="M3 9H1m16 0h-2M9 3V1m0 16v-2"/><circle cx="9" cy="9" r="2"/></svg>`,
   `<svg viewBox="0 0 18 18" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 11c0 2.21-3.13 4-7 4s-7-1.79-7-4"/><path d="M16 7c0 2.21-3.13 4-7 4S2 9.21 2 7c0-2.21 3.13-4 7-4s7 1.79 7 4z"/></svg>`
 ];
+const PILLAR_CLASSES = ['p1','p2','p3'];
+const PILLAR_LABELS = ['Pillar 01','Pillar 02','Pillar 03'];
 
-const PILLAR_CLASSES = ['p1', 'p2', 'p3'];
-const PILLAR_LABELS = ['Pillar 01', 'Pillar 02', 'Pillar 03'];
-
-function scrollMessages() {
-  messagesEl.scrollTop = messagesEl.scrollHeight;
-}
+function scrollMessages() { messagesEl.scrollTop = messagesEl.scrollHeight; }
 
 function addMessage(role, text) {
   const div = document.createElement('div');
   div.className = `msg ${role}`;
-  const initials = role === 'assistant' ? 'AI' : 'ME';
-  div.innerHTML = `
-    <div class="avatar">${initials}</div>
-    <div class="bubble">${text.replace(/\n/g, '<br>')}</div>
-  `;
+  div.innerHTML = `<div class="avatar">${role==='assistant'?'AI':'ME'}</div><div class="bubble">${text.replace(/\n/g,'<br>')}</div>`;
   messagesEl.appendChild(div);
   scrollMessages();
 }
 
 function showTyping() {
   const div = document.createElement('div');
-  div.className = 'msg assistant';
-  div.id = 'typing-indicator';
+  div.className = 'msg assistant'; div.id = 'typing-indicator';
   div.innerHTML = `<div class="avatar">AI</div><div class="bubble"><div class="typing"><span></span><span></span><span></span></div></div>`;
-  messagesEl.appendChild(div);
-  scrollMessages();
+  messagesEl.appendChild(div); scrollMessages();
 }
-
-function removeTyping() {
-  const t = document.getElementById('typing-indicator');
-  if (t) t.remove();
-}
+function removeTyping() { const t = document.getElementById('typing-indicator'); if(t) t.remove(); }
 
 function updateInfoGraphic() {
   const emptyState = document.getElementById('emptyState');
-  if (emptyState) emptyState.remove();
-
-  let existing = document.getElementById('infographic-content');
-  if (!existing) {
-    existing = document.createElement('div');
-    existing.id = 'infographic-content';
-    existing.style.cssText = 'display:flex;flex-direction:column;gap:24px;width:100%;';
-    infographicPanel.appendChild(existing);
+  if(emptyState) emptyState.remove();
+  let el = document.getElementById('infographic-content');
+  if(!el) {
+    el = document.createElement('div');
+    el.id = 'infographic-content';
+    el.style.cssText = 'display:flex;flex-direction:column;gap:24px;width:100%;';
+    infographicPanel.appendChild(el);
   }
-
-  const completedCount = pillarsData.length;
-  const progress = Math.round((completedCount / 3) * 100);
-
-  let headerHTML = `
-    <div class="infographic-header">
-      <span class="tag">Pillars of Stickiness</span>
-      <div class="customer-name">${customerName || 'Your Customer'}</div>
-      <div class="subtitle">${completedCount} of 3 pillars identified</div>
-      <div class="progress-bar" style="max-width:160px;margin:10px auto 0;">
-        <div class="progress-fill" style="width:${progress}%"></div>
-      </div>
-    </div>
-  `;
-
-  let pillarsHTML = '<div class="pillars-grid">';
-  for (let i = 0; i < 3; i++) {
+  const count = pillarsData.length;
+  const pct = Math.round((count/3)*100);
+  let html = `<div class="infographic-header">
+    <span class="tag">Pillars of Stickiness</span>
+    <div class="customer-name">${customerName||'Your Customer'}</div>
+    <div class="subtitle">${count} of 3 pillars identified</div>
+    <div class="progress-bar" style="max-width:160px;margin:10px auto 0;"><div class="progress-fill" style="width:${pct}%"></div></div>
+  </div><div class="pillars-grid">`;
+  for(let i=0;i<3;i++) {
     const p = pillarsData[i];
-    if (p) {
-      const evidenceItems = p.evidence.map(e => `<div class="evidence-item">${e}</div>`).join('');
-      pillarsHTML += `
-        <div class="pillar-card ${PILLAR_CLASSES[i]}">
-          <div class="pillar-icon">${PILLAR_ICONS[i]}</div>
-          <div class="pillar-num">${PILLAR_LABELS[i]}</div>
-          <div class="pillar-title">${p.title}</div>
-          <div class="divider"></div>
-          <div class="pillar-desc">${p.description}</div>
-          ${p.evidence && p.evidence.length ? `<div class="evidence-list">${evidenceItems}</div>` : ''}
-        </div>`;
+    if(p) {
+      const ev = p.evidence.map(e=>`<div class="evidence-item">${e}</div>`).join('');
+      html += `<div class="pillar-card ${PILLAR_CLASSES[i]}">
+        <div class="pillar-icon">${PILLAR_ICONS[i]}</div>
+        <div class="pillar-num">${PILLAR_LABELS[i]}</div>
+        <div class="pillar-title">${p.title}</div>
+        <div class="divider"></div>
+        <div class="pillar-desc">${p.description}</div>
+        ${p.evidence&&p.evidence.length?`<div class="evidence-list">${ev}</div>`:''}
+      </div>`;
     } else {
-      pillarsHTML += `
-        <div class="pillar-card empty">
-          <div class="placeholder-num">0${i+1}</div>
-        </div>`;
+      html += `<div class="pillar-card empty"><div class="placeholder-num">0${i+1}</div></div>`;
     }
   }
-  pillarsHTML += '</div>';
-
-  let summaryHTML = '';
-  const summaryData = window._lastSummary;
-  if (summaryData && completedCount === 3) {
-    summaryHTML = `
-      <div class="summary-card">
-        <h3>Relationship narrative</h3>
-        <p>${summaryData}</p>
-      </div>
-      <button class="export-btn" onclick="window.print()">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11 5H3M11 5V11a1 1 0 01-1 1H4a1 1 0 01-1-1V5M11 5V3a1 1 0 00-1-1H4a1 1 0 00-1 1v2M9 8H5m4 3H5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-        Export summary
-      </button>
-    `;
+  html += '</div>';
+  if(window._lastSummary && count===3) {
+    html += `<div class="summary-card"><h3>Relationship narrative</h3><p>${window._lastSummary}</p></div>
+    <button class="export-btn" onclick="window.print()">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M11 5H3M11 5V11a1 1 0 01-1 1H4a1 1 0 01-1-1V5M11 5V3a1 1 0 00-1-1H4a1 1 0 00-1 1v2M9 8H5m4 3H5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      Export summary
+    </button>`;
   }
+  el.innerHTML = html;
+}
 
-  existing.innerHTML = headerHTML + pillarsHTML + summaryHTML;
+async function callAPI(messages) {
+  const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': API_KEY,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1000, system: SYSTEM_PROMPT, messages })
+  });
+  const data = await resp.json();
+  return data.content?.map(b=>b.text||'').join('')||'';
 }
 
 async function sendMessage(userText) {
-  if (isLoading || !userText.trim()) return;
-  isLoading = true;
-  sendBtn.disabled = true;
-
+  if(isLoading||!userText.trim()) return;
+  isLoading = true; sendBtn.disabled = true;
   addMessage('user', userText);
-  conversationHistory.push({ role: 'user', content: userText });
-
+  conversationHistory.push({role:'user', content:userText});
   showTyping();
-
   try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': API_KEY, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: SYSTEM_PROMPT,
-        messages: conversationHistory
-      })
-    });
-
-    const data = await resp.json();
-    const rawText = data.content?.map(b => b.text || '').join('') || '';
-
+    const raw = await callAPI(conversationHistory);
     let parsed;
-    try {
-      const cleaned = rawText.replace(/```json|```/g, '').trim();
-      parsed = JSON.parse(cleaned);
-    } catch {
-      parsed = { message: rawText, pillars: [], customerName: null, overallSummary: null };
-    }
-
+    try { parsed = JSON.parse(raw.replace(/```json|```/g,'').trim()); }
+    catch { parsed = {message:raw, pillars:[]}; }
     removeTyping();
-
-    if (parsed.customerName) customerName = parsed.customerName;
-    if (parsed.pillars && parsed.pillars.length) pillarsData = parsed.pillars;
-    if (parsed.overallSummary) window._lastSummary = parsed.overallSummary;
-
-    const displayMsg = parsed.message || rawText;
-    addMessage('assistant', displayMsg);
-    conversationHistory.push({ role: 'assistant', content: rawText });
-
+    if(parsed.customerName) customerName = parsed.customerName;
+    if(parsed.pillars&&parsed.pillars.length) pillarsData = parsed.pillars;
+    if(parsed.overallSummary) window._lastSummary = parsed.overallSummary;
+    addMessage('assistant', parsed.message||raw);
+    conversationHistory.push({role:'assistant', content:raw});
     updateInfoGraphic();
-
-  } catch (err) {
+  } catch(err) {
     removeTyping();
-    addMessage('assistant', 'Something went wrong. Please check your API connection and try again.');
-    console.error(err);
+    addMessage('assistant','Something went wrong. Please check your API key and try again.');
   }
-
-  isLoading = false;
-  sendBtn.disabled = false;
-  userInput.focus();
+  isLoading = false; sendBtn.disabled = false; userInput.focus();
 }
 
 async function startConversation() {
-  if (appStarted) return;
-  appStarted = true;
-  isLoading = true;
-
+  if(appStarted) return; appStarted = true; isLoading = true;
   showTyping();
-
   try {
-    const initMsg = "Hello, I'm starting a new customer stickiness analysis session.";
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: SYSTEM_PROMPT,
-        messages: [{ role: 'user', content: initMsg }]
-      })
-    });
-
-    const data = await resp.json();
-    const rawText = data.content?.map(b => b.text || '').join('') || '';
-
+    const init = "Hello, I'm starting a new customer stickiness analysis session.";
+    const raw = await callAPI([{role:'user',content:init}]);
     let parsed;
-    try {
-      const cleaned = rawText.replace(/```json|```/g, '').trim();
-      parsed = JSON.parse(cleaned);
-    } catch {
-      parsed = { message: rawText };
-    }
-
+    try { parsed = JSON.parse(raw.replace(/```json|```/g,'').trim()); }
+    catch { parsed = {message:raw}; }
     removeTyping();
-    addMessage('assistant', parsed.message || rawText);
-    conversationHistory.push({ role: 'user', content: initMsg });
-    conversationHistory.push({ role: 'assistant', content: rawText });
-
-  } catch (err) {
+    addMessage('assistant', parsed.message||raw);
+    conversationHistory.push({role:'user',content:init});
+    conversationHistory.push({role:'assistant',content:raw});
+  } catch {
     removeTyping();
-    addMessage('assistant', "Welcome! I'm here to help you identify the three pillars of stickiness for your customer. Let's start — what's the name of the customer you're working with, and which product are you discussing?");
+    addMessage('assistant',"Welcome! Let's identify the three pillars of stickiness for your customer. What's the customer's name and which product are you discussing?");
   }
-
-  isLoading = false;
-  sendBtn.disabled = false;
+  isLoading = false; sendBtn.disabled = false;
 }
 
+// Input handlers
 userInput.addEventListener('input', () => {
-  sendBtn.disabled = !userInput.value.trim() || isLoading;
+  sendBtn.disabled = !userInput.value.trim()||isLoading;
   userInput.style.height = 'auto';
-  userInput.style.height = Math.min(userInput.scrollHeight, 120) + 'px';
+  userInput.style.height = Math.min(userInput.scrollHeight,120)+'px';
 });
-
 userInput.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && !e.shiftKey) {
+  if(e.key==='Enter'&&!e.shiftKey) {
     e.preventDefault();
     const val = userInput.value.trim();
-    if (val && !isLoading) {
-      userInput.value = '';
-      userInput.style.height = 'auto';
-      sendBtn.disabled = true;
-      sendMessage(val);
-    }
+    if(val&&!isLoading) { userInput.value=''; userInput.style.height='auto'; sendBtn.disabled=true; sendMessage(val); }
   }
 });
-
 sendBtn.addEventListener('click', () => {
   const val = userInput.value.trim();
-  if (val && !isLoading) {
-    userInput.value = '';
-    userInput.style.height = 'auto';
-    sendBtn.disabled = true;
-    sendMessage(val);
-  }
+  if(val&&!isLoading) { userInput.value=''; userInput.style.height='auto'; sendBtn.disabled=true; sendMessage(val); }
 });
 
-startConversation();
+// Password screen
+const pwScreen = document.getElementById('password-screen');
+const pwInput  = document.getElementById('pwInput');
+const pwBtn    = document.getElementById('pwBtn');
+const pwError  = document.getElementById('pwError');
+
+function submitPassword() {
+  if(pwInput.value==='effortless') {
+    pwScreen.style.display='none';
+    document.getElementById('key-screen').style.display='flex';
+  } else {
+    pwError.style.display='block';
+    pwInput.value=''; pwInput.focus();
+  }
+}
+pwBtn.addEventListener('click', submitPassword);
+pwInput.addEventListener('keydown', e => { if(e.key==='Enter') submitPassword(); });
+
+// API key screen
+const keyScreen   = document.getElementById('key-screen');
+const apiKeyInput = document.getElementById('apiKeyInput');
+const startBtn    = document.getElementById('startBtn');
+const keyError    = document.getElementById('keyError');
+const toggleVis   = document.getElementById('toggleVis');
+
+apiKeyInput.addEventListener('input', () => {
+  startBtn.disabled = !apiKeyInput.value.trim().startsWith('sk-ant-');
+  keyError.style.display='none';
+});
+toggleVis.addEventListener('click', () => {
+  apiKeyInput.type = apiKeyInput.type==='password'?'text':'password';
+});
+startBtn.addEventListener('click', async () => {
+  const key = apiKeyInput.value.trim();
+  startBtn.disabled=true; startBtn.textContent='Verifying…';
+  try {
+    const test = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body: JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:10,messages:[{role:'user',content:'hi'}]})
+    });
+    if(test.status===401) throw new Error('invalid');
+    API_KEY = key;
+    keyScreen.style.display='none';
+    startConversation();
+  } catch {
+    keyError.style.display='block';
+    startBtn.disabled=false; startBtn.textContent='Start session';
+  }
+});
+apiKeyInput.addEventListener('keydown', e => { if(e.key==='Enter'&&!startBtn.disabled) startBtn.click(); });
+
+// Draw wizard
+(function drawWizard() {
+  const c = document.getElementById('wizardCanvas');
+  if(!c) return;
+  const ctx = c.getContext('2d');
+  const p = (x,y,color) => { ctx.fillStyle=color; ctx.fillRect(x,y,1,1); };
+  const DBR='#3d2410',BR='#6b4423',MBR='#8b5e35',LBR='#a67c52',
+        SK='#d4a574',SKD='#b8865a',WB='#f0ece0',WBD='#c8c4b0',
+        ST='#5a3c1a',GN='#2e7d4f',LGN='#5dbb85';
+  // hat
+  p(7,0,DBR);p(8,0,DBR);
+  p(6,1,DBR);p(7,1,BR);p(8,1,BR);p(9,1,DBR);
+  p(5,2,DBR);p(6,2,BR);p(7,2,MBR);p(8,2,MBR);p(9,2,BR);p(10,2,DBR);
+  p(5,3,DBR);p(6,3,BR);p(7,3,BR);p(8,3,BR);p(9,3,BR);p(10,3,DBR);
+  for(let x=3;x<=12;x++) p(x,4,x===3||x===12?DBR:LBR);
+  // face
+  for(let x=5;x<=10;x++) p(x,5,SK);
+  p(5,6,SK);p(6,6,SKD);p(7,6,SK);p(8,6,SK);p(9,6,SKD);p(10,6,SK);
+  for(let x=5;x<=10;x++) p(x,7,SK);
+  // beard top
+  p(5,8,WB);p(6,8,WB);p(7,8,SK);p(8,8,SK);p(9,8,WB);p(10,8,WB);
+  // shoulders
+  p(3,9,DBR);p(4,9,BR);p(5,9,WB);p(6,9,WB);p(7,9,WB);p(8,9,WB);p(9,9,WB);p(10,9,WB);p(11,9,BR);p(12,9,DBR);
+  // robe + beard
+  p(3,10,DBR);p(4,10,MBR);p(5,10,BR);p(6,10,WB);p(7,10,WBD);p(8,10,WBD);p(9,10,WB);p(10,10,BR);p(11,10,MBR);p(12,10,DBR);
+  p(3,11,DBR);p(4,11,BR);p(5,11,MBR);p(6,11,WBD);p(7,11,WB);p(8,11,WB);p(9,11,WBD);p(10,11,MBR);p(11,11,BR);p(12,11,DBR);
+  p(2,12,DBR);p(3,12,BR);p(4,12,MBR);p(5,12,LBR);p(6,12,BR);p(7,12,BR);p(8,12,BR);p(9,12,LBR);p(10,12,MBR);p(11,12,BR);p(12,12,DBR);
+  p(2,13,DBR);p(3,13,MBR);p(4,13,LBR);p(5,13,MBR);p(6,13,BR);p(7,13,BR);p(8,13,BR);p(9,13,MBR);p(10,13,LBR);p(11,13,MBR);p(12,13,DBR);
+  p(1,14,DBR);p(2,14,BR);p(3,14,LBR);p(4,14,LBR);p(5,14,MBR);p(6,14,BR);p(7,14,BR);p(8,14,MBR);p(9,14,LBR);p(10,14,LBR);p(11,14,BR);p(12,14,DBR);
+  p(1,15,DBR);p(2,15,MBR);p(3,15,LBR);p(4,15,LBR);p(5,15,LBR);p(6,15,MBR);p(7,15,MBR);p(8,15,LBR);p(9,15,LBR);p(10,15,LBR);p(11,15,MBR);p(12,15,DBR);
+  p(1,16,DBR);p(2,16,DBR);p(3,16,BR);p(4,16,LBR);p(5,16,LBR);p(8,16,LBR);p(9,16,LBR);p(10,16,BR);p(11,16,DBR);p(12,16,DBR);
+  p(3,17,DBR);p(4,17,BR);p(5,17,MBR);p(8,17,MBR);p(9,17,BR);p(10,17,DBR);
+  // staff + gem
+  p(0,2,LGN);p(1,2,GN);p(0,3,GN);p(1,3,LGN);
+  for(let y=4;y<=17;y++) p(0,y,ST);
+  p(0,8,MBR);p(0,12,MBR);
+})();
 </script>
 </body>
 </html>
